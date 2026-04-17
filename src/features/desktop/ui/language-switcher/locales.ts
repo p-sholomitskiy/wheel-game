@@ -8,5 +8,5 @@ export type Locale = {
 export const LOCALE_ORDER: LocaleCode[] = ['kg', 'kz', 'uz']
 
 export function flagSrc(loc: Locale) {
-  return `/flags/${loc.code}.svg`
+  return `${import.meta.env.BASE_URL}flags/${loc.code}.svg`
 }

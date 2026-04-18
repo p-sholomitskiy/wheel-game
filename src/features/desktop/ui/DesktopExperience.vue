@@ -3,13 +3,17 @@
     <LanguageSwitcher />
     <FallingChips />
 
-    <div class="desktop-hero-top">
-      <BrandRow />
-      <HeroHeadline />
-      <HeroActionButton />
-    </div>
+    <div class="desktop-content-column">
+      <div id="desktop-bonus-anchor" class="desktop-bonus-anchor"></div>
 
-    <WheelSection />
+      <div class="desktop-hero-top">
+        <BrandRow />
+        <HeroHeadline />
+        <HeroActionButton />
+      </div>
+
+      <WheelSection />
+    </div>
   </main>
 </template>
 
@@ -24,41 +28,58 @@ import WheelSection from './WheelSection.vue'
 
 <style scoped>
 .desktop-screen {
-  min-height: 100vh;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px 24px 40px;
-  background: url('/desktop/bg-desktop.svg') center / cover no-repeat;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
   overflow: hidden;
+  background-color: #0c0e18;
+  background-image: url('/desktop/bg-desktop.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.desktop-content-column {
+  position: relative;
+  z-index: 1;
+  width: 610px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .desktop-hero-top {
-  position: fixed;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  width: min(100%, 760px);
-  box-sizing: border-box;
-  padding: 0 24px;
+  order: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media (max-width: 900px) {
-  .desktop-hero-top {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    z-index: auto;
-    width: 100%;
-    padding: 0;
-    gap: 30px;
-  }
+.desktop-content-column > :deep(.wheel-section) {
+  order: 2;
+}
+
+.desktop-bonus-anchor {
+  order: 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.desktop-bonus-anchor:empty {
+  display: none;
 }
 </style>

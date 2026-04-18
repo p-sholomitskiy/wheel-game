@@ -17,16 +17,19 @@ defineProps<{
 <style scoped>
 .hero-action-button {
   box-sizing: border-box;
-  width: fit-content;
+  width: 332px;
   max-width: 100%;
-  height: 35px;
-  padding: 10px 30px;
+  min-height: 35px;
+  height: auto;
+  opacity: 1;
   border: 0;
   border-radius: 50px;
+  padding: 10px 30px;
   background: linear-gradient(177.67deg, #ff1c00 8.34%, #be1500 51.74%, #580a00 267.47%);
   color: #ffffff;
+  cursor: pointer;
   font-family: 'Montserrat', system-ui, sans-serif;
-  font-size: 22px;
+  font-size: clamp(14px, 2.5vmin, 18px);
   font-weight: 500;
   font-style: italic;
   line-height: 1;
@@ -34,16 +37,11 @@ defineProps<{
   text-align: center;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  cursor: pointer;
 }
 
 @media (max-width: 900px) {
   .hero-action-button {
-    font-size: clamp(16px, 3vw, 22px);
+    font-size: clamp(14px, 2.2vmin, 18px);
   }
 }
 </style>

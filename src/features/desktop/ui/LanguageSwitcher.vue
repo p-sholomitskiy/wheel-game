@@ -1,16 +1,6 @@
 <template>
   <Teleport to="body">
-    <div
-      ref="rootEl"
-      class="language-switcher"
-      :style="{
-        position: 'fixed',
-        top: '40px',
-        right: '120px',
-        left: 'auto',
-        zIndex: 60,
-      }"
-    >
+    <div ref="rootEl" class="language-switcher">
       <LanguageSwitcherRow
         :locale="currentLocale"
         is-trigger
@@ -112,28 +102,3 @@ onUnmounted(() => {
   document.removeEventListener('keydown', onKeydown)
 })
 </script>
-
-<style scoped>
-.language-switcher {
-  box-sizing: border-box;
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.language-switcher__dropdown {
-  flex-shrink: 0;
-}
-
-.language-switcher__list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-</style>

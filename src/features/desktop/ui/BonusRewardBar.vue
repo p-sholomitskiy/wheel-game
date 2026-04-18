@@ -35,81 +35,91 @@ defineProps<{
 </script>
 
 <style scoped>
+@keyframes bonus-reward-bar-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .bonus-reward-bar {
+  position: relative;
   box-sizing: border-box;
   width: 410px;
-  max-width: calc(100vw - 32px);
-  height: 100px;
-  padding: 20px 30px 20px 120px;
+  max-width: 100%;
+  min-height: 100px;
+  height: auto;
+  margin: 20px auto 0;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
   border-radius: 16px;
+  padding: 20px 30px 20px 120px;
   background: linear-gradient(180deg, #f7df00 0%, #ffbf00 100%);
   box-shadow: 0 4px 21.7px 0 #2f02009e;
-  position: relative;
-  display: flex;
-  align-items: center;
+  animation: bonus-reward-bar-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bonus-reward-bar {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .bonus-reward-bar__gift {
   position: absolute;
-  left: 0;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   width: 110px;
   height: 110px;
+  object-fit: contain;
   pointer-events: none;
-  user-select: none;
 }
 
 .bonus-reward-bar__body {
+  flex: 1;
+  min-width: 0;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  width: 100%;
-  min-width: 0;
 }
 
 .bonus-reward-bar__text {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 0;
-  flex: 1;
+  gap: 8px;
 }
 
-.bonus-reward-bar__amount {
-  min-width: 0;
+.bonus-reward-bar__body :deep(.bonus-reward-cta) {
+  flex-shrink: 0;
 }
 
 .bonus-reward-bar__amount-img {
-  flex-shrink: 0;
   display: block;
-  height: 40px;
-  width: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .bonus-reward-bar__subtitle {
-  margin-top: 6px;
   font-size: 0.75rem;
   font-weight: 800;
   color: #a90004;
   text-transform: uppercase;
   text-align: center;
-}
-
-@media (max-width: 520px) {
-  .bonus-reward-bar {
-    width: min(410px, 100%);
-    height: auto;
-    min-height: 100px;
-    padding: 16px 16px 16px 108px;
-  }
-
-  .bonus-reward-bar__body {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
 }
 </style>

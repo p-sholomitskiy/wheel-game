@@ -4,7 +4,7 @@
     <FallingChips />
 
     <div class="desktop-content-column">
-      <div id="desktop-bonus-anchor" class="desktop-bonus-anchor"></div>
+      <div id="bonus-reward-anchor" class="desktop-bonus-anchor"></div>
 
       <div class="desktop-hero-top">
         <BrandRow />
@@ -18,12 +18,12 @@
 </template>
 
 <script setup lang="ts">
-import HeroActionButton from './HeroActionButton.vue'
-import BrandRow from './BrandRow.vue'
-import FallingChips from './FallingChips.vue'
-import HeroHeadline from './HeroHeadline.vue'
-import LanguageSwitcher from './LanguageSwitcher.vue'
-import WheelSection from './WheelSection.vue'
+import HeroActionButton from '@/features/shared/ui/HeroActionButton.vue'
+import BrandRow from '@/features/shared/ui/BrandRow.vue'
+import FallingChips from '@/features/shared/ui/FallingChips.vue'
+import HeroHeadline from '@/features/shared/ui/HeroHeadline.vue'
+import LanguageSwitcher from '@/features/shared/ui/LanguageSwitcher.vue'
+import WheelSection from '@/features/shared/ui/WheelSection.vue'
 </script>
 
 <style scoped>
@@ -32,13 +32,15 @@ import WheelSection from './WheelSection.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
   min-height: 100%;
   overflow: hidden;
+  padding: clamp(20px, 4vh, 56px) 0 40px;
+  box-sizing: border-box;
   background-color: #0c0e18;
-  background-image: url('/desktop/bg-desktop.svg');
+  background-image: url('/ui/bg-desktop.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -73,13 +75,12 @@ import WheelSection from './WheelSection.vue'
 
 .desktop-bonus-anchor {
   order: 3;
+  position: relative;
+  z-index: 4;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.desktop-bonus-anchor:empty {
-  display: none;
+  flex-shrink: 0;
 }
 </style>

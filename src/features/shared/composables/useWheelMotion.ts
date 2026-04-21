@@ -1,10 +1,23 @@
 import { computed, onBeforeUnmount, ref } from "vue";
 
 const FULL_SPINS = 5;
-const TARGET_150_FS_ANGLE = 324;
 const SPIN_DURATION_MS = 4200;
 
-export function useWheelMotion() {
+export type UseWheelMotionOptions = {
+  getTargetNormalizedAngleDeg: () => number | null;
+  onSpinAnimationComplete?: () => void;
+};
+
+/** Normalized clockwise wheel rotation (deg) so sector `index` sits under the top pointer. */
+export function sectorIndexToNormalizedWheelAngle(index: number, sectorCount: number): number {
+  if (sectorCount <= 0) return 360;
+  const sectorAngle = 360 / sectorCount;
+  let angle = (360 - index * sectorAngle) % 360;
+  if (angle === 0) angle = 360;
+  return angle;
+}
+
+export function useWheelMotion(options: UseWheelMotionOptions) {
   const wheelRotation = ref(0);
   const isSpinning = ref(false);
   const hasSpinCompleted = ref(false);
@@ -31,6 +44,9 @@ export function useWheelMotion() {
   function spinWheel() {
     if (isSpinning.value) return;
 
+    const targetAngle = options.getTargetNormalizedAngleDeg();
+    if (targetAngle === null) return;
+
     clearSpinTimer();
     isSpinning.value = true;
     hasSpinCompleted.value = false;
@@ -40,7 +56,7 @@ export function useWheelMotion() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const currentAngle = normalizeAngle(wheelRotation.value);
-        const targetDelta = (TARGET_150_FS_ANGLE - currentAngle + 360) % 360;
+        const targetDelta = (targetAngle - currentAngle + 360) % 360;
         const landingDelta = targetDelta === 0 ? 360 : targetDelta;
 
         wheelRotation.value += FULL_SPINS * 360 + landingDelta;
@@ -52,6 +68,7 @@ export function useWheelMotion() {
       isSpinning.value = false;
       hasSpinCompleted.value = true;
       spinTransition.value = "none";
+      options.onSpinAnimationComplete?.();
     }, SPIN_DURATION_MS);
   }
 

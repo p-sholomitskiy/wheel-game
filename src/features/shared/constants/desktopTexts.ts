@@ -14,9 +14,12 @@ export type DesktopTexts = {
   };
   wheel: {
     labels: string[];
-    highlightedLabels: string[];
+    /** Два элемента: целевой сектор 1-го и 2-го прокрута + подсветка (строки — как в `labels`, можно с теми же переносами строк). */
+    highlightedLabels: [string, string];
   };
 };
+
+export const CASINO_NAME = `BIGSBET`;
 
 export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
   kg: {
@@ -36,8 +39,19 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
       buttonText: "Баары",
     },
     wheel: {
-      labels: ["1000€", "150FS", "WOWBET", "кайрадан\nкөр", "100€", "1500€", "500€", "WOWBET", "кайрадан\nкөр", "100FS"],
-      highlightedLabels: ["1500 ЕВРО", "150FS"],
+      labels: [
+        "1000€",
+        "150FS",
+        `${CASINO_NAME}`,
+        "кайрадан\nкөр",
+        "150€",
+        "1500€",
+        "500€",
+        `${CASINO_NAME}`,
+        "кайрадан\nкөр",
+        "50FS",
+      ],
+      highlightedLabels: ["150€", "50FS"],
     },
   },
   kz: {
@@ -57,8 +71,19 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
       buttonText: "Барлық",
     },
     wheel: {
-      labels: ["1000€", "150FS", "WOWBET", "қайталап\nкөр", "100€", "1500€", "500€", "WOWBET", "қайталап\nкөр", "100FS"],
-      highlightedLabels: ["1500 ЕВРО", "150FS"],
+      labels: [
+        "1000€",
+        "150FS",
+        `${CASINO_NAME}`,
+        "қайталап\nкөр",
+        "150€",
+        "1500€",
+        "500€",
+        `${CASINO_NAME}`,
+        "қайталап\nкөр",
+        "50FS",
+      ],
+      highlightedLabels: ["150€", "50FS"],
     },
   },
   uz: {
@@ -78,8 +103,19 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
       buttonText: "Hammasi",
     },
     wheel: {
-      labels: ["1000€", "150FS", "WOWBET", "qayta\nurinib ko'r", "100€", "1500€", "500€", "WOWBET", "qayta\nurinib ko'r", "100FS"],
-      highlightedLabels: ["1500 YEVRO", "150FS"],
+      labels: [
+        "1000€",
+        "150FS",
+        `${CASINO_NAME}`,
+        "qayta\nurinib ko'r",
+        "150€",
+        "1500€",
+        "500€",
+        `${CASINO_NAME}`,
+        "qayta\nurinib ko'r",
+        "50FS",
+      ],
+      highlightedLabels: ["150€", "50FS"],
     },
   },
 };

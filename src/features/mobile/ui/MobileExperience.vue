@@ -3,12 +3,13 @@
     <FallingChips />
 
     <div class="mobile-content-column">
-      <div id="bonus-reward-anchor" class="mobile-bonus-anchor" />
-
       <section class="mobile-hero">
         <div class="mobile-brand-bar">
-          <BrandRow layout="mobile" />
-          <LanguageSwitcher position="mobile" embedded />
+          <BrandRow layout="mobile">
+            <template #trailing>
+              <LanguageSwitcher position="mobile" embedded />
+            </template>
+          </BrandRow>
         </div>
         <HeroHeadline layout="mobile" />
         <HeroActionButton layout="mobile" />
@@ -16,16 +17,29 @@
 
       <WheelSection class="mobile-wheel" />
     </div>
+
+    <div id="bonus-reward-anchor" class="mobile-bonus-anchor" />
+
+    <img
+      class="mobile-mascot"
+      src="/ui/mascot-mobile.svg"
+      alt=""
+      width="256"
+      height="275"
+      decoding="async"
+      draggable="false"
+      aria-hidden="true"
+    />
   </main>
 </template>
 
 <script setup lang="ts">
-import BrandRow from "@/features/shared/ui/BrandRow.vue"
-import FallingChips from "@/features/shared/ui/FallingChips.vue"
-import HeroActionButton from "@/features/shared/ui/HeroActionButton.vue"
-import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue"
-import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue"
-import WheelSection from "@/features/shared/ui/WheelSection.vue"
+import BrandRow from "@/features/shared/ui/BrandRow.vue";
+import FallingChips from "@/features/shared/ui/FallingChips.vue";
+import HeroActionButton from "@/features/shared/ui/HeroActionButton.vue";
+import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue";
+import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue";
+import WheelSection from "@/features/shared/ui/WheelSection.vue";
 </script>
 
 <style scoped>
@@ -39,7 +53,8 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue"
   height: 100%;
   min-height: 100%;
   overflow: hidden;
-  padding: clamp(12px, 3vh, 24px) 0 clamp(16px, 4vh, 32px);
+  /* Верхний отступ экрана задаётся у .mobile-hero (10vh + safe-area). */
+  padding: 0 0 clamp(16px, 4vh, 32px);
   box-sizing: border-box;
   background-color: #0c0e18;
   background-image: url("/ui/bg-desktop.svg");
@@ -62,9 +77,12 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue"
 }
 
 .mobile-bonus-anchor {
-  order: 3;
-  position: relative;
-  z-index: 4;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 30px);
+  /* Выше колонки (z-index:1), маскота и выпадающего языка (до ~250). */
+  z-index: 400;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -77,15 +95,8 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue"
   zoom: 0.75;
 }
 
-/*
- * Центр BonusRewardBar по вертикали на линии нижней границы колеса:
- * верх бара = низ_колеса + gap − margin = низ_колеса − h/2  →  margin = gap + h/2
- * h/2 берём по визуальной высоте бара с zoom ~0.75 (подстройка при смене макета).
- */
-.mobile-content-column > .mobile-bonus-anchor :deep(.bonus-message) {
-  margin-top: calc(
-    -1 * (clamp(12px, 3vw, 20px) + clamp(36px, 11vw, 46px))
-  );
+.mobile-bonus-anchor :deep(.bonus-message) {
+  margin-top: 0;
 }
 
 .mobile-hero {
@@ -95,30 +106,47 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue"
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(16px, 4vw, 24px);
+  justify-content: center;
+  gap: clamp(8px, 2vh, 24px);
   width: 100%;
   box-sizing: border-box;
+  flex-shrink: 0;
+  height: 30vh;
+  max-height: 30vh;
+  min-height: 0;
+  /* Без внутреннего скролла: при overflow-y:auto первая прокрутка уводит CTA за край на кадр (инерция). */
+  overflow: hidden;
+  margin-top: 5%;
+}
+
+@supports (height: 1svh) {
+  .mobile-hero {
+    height: 30svh;
+    max-height: 30svh;
+  }
+}
+
+@media (max-height: 699px) {
+  .mobile-hero {
+    height: 25vh;
+    max-height: 25vh;
+  }
+}
+
+@supports (height: 1svh) {
+  @media (max-height: 699px) {
+    .mobile-hero {
+      height: 25svh;
+      max-height: 25svh;
+    }
+  }
 }
 
 .mobile-brand-bar {
   position: relative;
   z-index: 9;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(10px, 3.5vw, 20px);
   width: 100%;
   box-sizing: border-box;
-}
-
-.mobile-brand-bar :deep(.brand-row) {
-  flex: 0 1 auto;
-  min-width: 0;
-  flex-wrap: nowrap;
-  justify-content: center;
-  gap: clamp(8px, 2.5vw, 14px);
 }
 
 .mobile-content-column > :deep(.mobile-wheel) {
@@ -131,5 +159,22 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue"
   width: 120px;
   height: 122px;
   aspect-ratio: unset;
+}
+
+/* Декор: всегда у левого нижнего края вьюпорта (не скроллится с контентом). */
+.mobile-mascot {
+  position: fixed;
+  left: env(safe-area-inset-left, 0);
+  bottom: env(safe-area-inset-bottom, 0);
+  z-index: 2;
+  box-sizing: border-box;
+  height: 40dvh;
+  width: auto;
+  aspect-ratio: 256 / 275;
+  object-fit: contain;
+  object-position: left bottom;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 </style>

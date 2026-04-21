@@ -67,6 +67,8 @@ watch(subtitleDisplay, () => {
 <style scoped>
 .bonus-reward-bar {
   position: relative;
+  z-index: 1;
+  isolation: isolate;
   box-sizing: border-box;
   width: 410px;
   max-width: 100%;

@@ -1,7 +1,6 @@
 <template>
   <main class="desktop-screen">
     <LanguageSwitcher />
-    <FallingChips />
 
     <div class="desktop-content-column">
       <div id="bonus-reward-anchor" class="desktop-bonus-anchor"></div>
@@ -34,7 +33,6 @@
 <script setup lang="ts">
 import HeroActionButton from "@/features/shared/ui/HeroActionButton.vue";
 import BrandRow from "@/features/shared/ui/BrandRow.vue";
-import FallingChips from "@/features/shared/ui/FallingChips.vue";
 import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue";
 import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue";
 import WheelSection from "@/features/shared/ui/WheelSection.vue";
@@ -71,16 +69,46 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  --desktop-content-gap: 20px;
 }
 
 .desktop-hero-top {
   order: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
+  display: grid;
+  grid-template-rows: minmax(48px, auto) minmax(0, 1fr) minmax(35px, auto);
+  align-items: stretch;
+  row-gap: clamp(16px, 2.5vh, 30px);
   width: 100%;
+  container-type: inline-size;
   box-sizing: border-box;
+}
+
+.desktop-hero-top :deep(.brand-row) {
+  align-self: center;
+  min-height: 48px;
+}
+
+.desktop-hero-top :deep(.hero-headline:not(.hero-headline--mobile)) {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+@supports (font-size: 1cqi) {
+  .desktop-hero-top :deep(.hero-headline:not(.hero-headline--mobile)) {
+    font-size: clamp(20px, 5.5cqi, 36px);
+  }
+}
+
+.desktop-hero-top :deep(.hero-action-button) {
+  align-self: center;
+  justify-self: center;
+  max-width: 100%;
+}
+
+.desktop-content-column > :deep(.wheel-section .wheel-spin-button) {
+  --wheel-spin-button-width: calc(62% * 1.15 * 1.1);
 }
 
 .desktop-content-column > :deep(.wheel-section) {
@@ -96,6 +124,17 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+}
+
+/*
+ * Бонус-бар телепортируется сюда из WheelSection.
+ * Нужно, чтобы нижний край колеса совпадал с серединой BonusRewardBar:
+ * поднимаем блок на половину высоты бара + колоночный gap (20px у .desktop-content-column).
+ * min-height бара в BonusRewardBar.vue = 100px.
+ */
+.desktop-bonus-anchor :deep(.bonus-message) {
+  --bonus-overlap-half: clamp(50px, 50 * min(100cqw / 410, 1px), 200px);
+  margin-top: calc(-1 * (var(--desktop-content-gap, 20px) + var(--bonus-overlap-half)));
 }
 
 /* Декор: по умолчанию правый нижний угол; при ширине < 1800px — левый нижний + mascot-mobile.svg через <picture>. */

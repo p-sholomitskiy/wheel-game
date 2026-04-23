@@ -1,28 +1,40 @@
 <template>
-  <button class="hero-action-button" :class="{ 'hero-action-button--mobile': layout === 'mobile' }" type="button">
-    {{ text ?? texts.heroActionButton }}
+  <button
+    class="hero-action-button"
+    :class="{ 'hero-action-button--mobile': props.layout === 'mobile' }"
+    type="button"
+  >
+    {{ buttonLabel }}
   </button>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useDesktopTexts } from "../composables/useDesktopTexts";
+import { useWheelSpinStorage } from "../composables/useWheelSpinStorage";
 
 const { texts } = useDesktopTexts();
+const { completedSpins, maxSpins } = useWheelSpinStorage();
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     text?: string;
     layout?: "desktop" | "mobile";
   }>(),
   { layout: "desktop" },
 );
+
+const buttonLabel = computed(() => {
+  const baseText = props.text ?? texts.value.heroActionButton;
+  const remainingAttempts = Math.max(0, maxSpins - completedSpins.value);
+  return `${baseText} - ${remainingAttempts}`;
+});
 </script>
 
 <style scoped>
 .hero-action-button {
   box-sizing: border-box;
-  width: 332px;
-  max-width: 100%;
+  width: 70%;
   min-height: 35px;
   height: auto;
   opacity: 1;
@@ -37,13 +49,17 @@ withDefaults(
   text-align: center;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
+  font-family: Montserrat, system-ui, sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 22px;
 }
 
 .hero-action-button--mobile {
-  width: 327px;
-  max-width: 100%;
+  width: 90%;
   min-height: 35px;
   height: 35px;
+  margin: 0 auto;
   padding: 0 20px;
   font-family: Montserrat, system-ui, sans-serif;
   font-weight: 500;
@@ -60,6 +76,12 @@ withDefaults(
 @media (max-width: 900px) {
   .hero-action-button:not(.hero-action-button--mobile) {
     font-size: clamp(14px, 2.2vmin, 18px);
+  }
+}
+
+@media (max-width: 399px) {
+  .hero-action-button--mobile {
+    font-size: 19px;
   }
 }
 </style>

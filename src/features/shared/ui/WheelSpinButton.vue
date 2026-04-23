@@ -39,11 +39,12 @@ function onKeydown(e: KeyboardEvent) {
   }
 }
 .wheel-spin-button {
+  --wheel-spin-button-width: 62%;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 62%;
+  width: var(--wheel-spin-button-width);
   aspect-ratio: 320 / 110;
   z-index: 4;
   border: 0;
@@ -64,7 +65,6 @@ function onKeydown(e: KeyboardEvent) {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 16% 0 14%;
   box-sizing: border-box;
   font-family: "Montserrat", system-ui, sans-serif;
   font-weight: 800;

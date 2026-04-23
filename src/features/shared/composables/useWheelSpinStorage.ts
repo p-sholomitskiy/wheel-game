@@ -16,10 +16,10 @@ function loadCount(): number {
   }
 }
 
-export function useWheelSpinStorage() {
-  const completedSpins = ref(loadCount());
-  const canSpin = computed(() => completedSpins.value < MAX_SPINS);
+const completedSpins = ref(loadCount());
+const canSpin = computed(() => completedSpins.value < MAX_SPINS);
 
+export function useWheelSpinStorage() {
   function recordSpinComplete() {
     if (completedSpins.value >= MAX_SPINS) return;
     completedSpins.value += 1;

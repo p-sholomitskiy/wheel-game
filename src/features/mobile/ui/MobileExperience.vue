@@ -1,7 +1,5 @@
 <template>
   <main class="mobile-screen">
-    <FallingChips />
-
     <div class="mobile-content-column">
       <section class="mobile-hero">
         <div class="mobile-brand-bar">
@@ -35,7 +33,6 @@
 
 <script setup lang="ts">
 import BrandRow from "@/features/shared/ui/BrandRow.vue";
-import FallingChips from "@/features/shared/ui/FallingChips.vue";
 import HeroActionButton from "@/features/shared/ui/HeroActionButton.vue";
 import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue";
 import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue";
@@ -103,12 +100,12 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   order: 1;
   position: relative;
   z-index: 8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(8px, 2vh, 24px);
+  display: grid;
+  grid-template-rows: minmax(40px, auto) minmax(0, 1fr) 35px;
+  align-items: stretch;
+  row-gap: clamp(8px, 2vh, 18px);
   width: 100%;
+  container-type: inline-size;
   box-sizing: border-box;
   flex-shrink: 0;
   height: 30vh;
@@ -117,12 +114,13 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   /* Без внутреннего скролла: при overflow-y:auto первая прокрутка уводит CTA за край на кадр (инерция). */
   overflow: hidden;
   margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 @supports (height: 1svh) {
   .mobile-hero {
-    height: 30svh;
-    max-height: 30svh;
+    height: 25svh;
+    max-height: 25svh;
   }
 }
 
@@ -146,7 +144,40 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   position: relative;
   z-index: 9;
   width: 100%;
+  min-height: 40px;
   box-sizing: border-box;
+}
+
+.mobile-hero :deep(.hero-headline--mobile) {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+@supports (font-size: 1cqi) {
+  .mobile-hero :deep(.hero-headline--mobile) {
+    font-size: clamp(16px, 7cqi, 28px);
+  }
+}
+
+/* Узкий вьюпорт: меньший шрифт и обрезка, иначе clamp(7cqi) перебивает scoped-стили и заголовок наезжает на CTA. */
+@media (max-width: 399px) {
+  .mobile-hero :deep(.hero-headline--mobile) {
+    font-size: 22px;
+    line-height: 1.15;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .mobile-hero :deep(.hero-headline--mobile .hero-headline__outline) {
+    -webkit-text-stroke: clamp(1px, 0.08em, 2px) #e10000;
+  }
+
+  .mobile-hero :deep(.hero-action-button--mobile) {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 .mobile-content-column > :deep(.mobile-wheel) {

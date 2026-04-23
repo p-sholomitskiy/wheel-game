@@ -33,7 +33,7 @@ const displayText = computed(() => props.text ?? texts.value.heroHeadline);
   font-size: clamp(24px, 5.59vmin, 36px);
   font-weight: 700;
   font-style: italic;
-  line-height: 1;
+  line-height: 1.15;
   letter-spacing: 0;
   text-align: center;
   text-transform: uppercase;
@@ -41,10 +41,16 @@ const displayText = computed(() => props.text ?? texts.value.heroHeadline);
   text-box-edge: cap alphabetic;
 }
 
+.hero-headline:not(.hero-headline--mobile) {
+  flex: 1 1 auto;
+}
+
 .hero-headline__outline,
 .hero-headline__fill {
   grid-area: 1 / 1;
   max-width: 100%;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
   text-align: inherit;
   font: inherit;
   letter-spacing: inherit;
@@ -63,19 +69,27 @@ const displayText = computed(() => props.text ?? texts.value.heroHeadline);
 
 .hero-headline__fill {
   z-index: 1;
-  background: linear-gradient(185.77deg, #fffe00 4.36%, #ffb900 34.5%, #fffe00 63.77%, #ff9f00 83.42%);
+  background: linear-gradient(
+    185.77deg,
+    #fffe00 4.36%,
+    #ffb900 34.5%,
+    #fffe00 63.77%,
+    #ff9f00 83.42%
+  );
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
 }
 
 .hero-headline--mobile {
+  flex: 0 0 auto;
   font-family: Montserrat, system-ui, sans-serif;
   font-weight: 700;
   font-style: italic;
-  font-size: 18px;
+  font-size: 20px;
+  min-height: 2.4em;
   leading-trim: CAP_HEIGHT;
-  line-height: 100%;
+  line-height: 1.2;
   letter-spacing: 0;
   text-align: center;
   text-transform: uppercase;
@@ -85,13 +99,25 @@ const displayText = computed(() => props.text ?? texts.value.heroHeadline);
 
 @media (min-height: 701px) {
   .hero-headline--mobile {
-    font-size: 25px;
+    font-size: 28px;
   }
 }
 
 @media (max-width: 900px) {
   .hero-headline:not(.hero-headline--mobile) {
     font-size: clamp(20px, 4vmin, 36px);
+  }
+}
+
+@media (max-width: 399px) {
+  .hero-headline--mobile {
+    font-size: 22px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .hero-headline--mobile .hero-headline__outline {
+    -webkit-text-stroke: clamp(1px, 0.08em, 2px) #e10000;
   }
 }
 </style>

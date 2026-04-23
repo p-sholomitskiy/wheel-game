@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
 
-export type LocaleCode = "kg" | "kz" | "uz";
+export type LocaleCode = "uz" | "tr" | "en";
 
 export const useLocaleStore = defineStore("desktop-locale", {
   state: () => ({
-    current: "kg" as LocaleCode,
+    current: "en" as LocaleCode,
   }),
   actions: {
     setLocale(code: LocaleCode) {

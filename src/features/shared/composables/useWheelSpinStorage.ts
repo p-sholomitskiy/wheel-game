@@ -32,5 +32,16 @@ export function useWheelSpinStorage() {
     }
   }
 
-  return { completedSpins, canSpin, recordSpinComplete, maxSpins: MAX_SPINS };
+  function resetCompletedSpins() {
+    completedSpins.value = 0;
+    try {
+      if (typeof localStorage !== "undefined") {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    } catch {
+      // ignore private mode / quota
+    }
+  }
+
+  return { completedSpins, canSpin, recordSpinComplete, maxSpins: MAX_SPINS, resetCompletedSpins };
 }

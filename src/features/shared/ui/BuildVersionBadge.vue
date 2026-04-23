@@ -1,9 +1,12 @@
 <template>
-  <div v-if="isVisible" class="build-version-badge">v{{ displayVersion }}</div>
+  <div v-if="isVisible" class="build-version-badge" @click="resetCompletedSpins">
+    v{{ displayVersion }}
+  </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useWheelSpinStorage } from "../composables/useWheelSpinStorage";
 
 const props = withDefaults(
   defineProps<{
@@ -11,6 +14,8 @@ const props = withDefaults(
   }>(),
   { enabled: true },
 );
+
+const { resetCompletedSpins } = useWheelSpinStorage();
 
 const envVersion = import.meta.env.VITE_BUILD_VERSION as string | undefined;
 const envEnabled = (import.meta.env.VITE_SHOW_BUILD_VERSION as string | undefined) !== "false";
@@ -33,7 +38,7 @@ const isVisible = computed(() => props.enabled && envEnabled);
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.02em;
-  pointer-events: none;
   user-select: none;
+  cursor: pointer;
 }
 </style>

@@ -37,3 +37,8 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Env (Vite): не коммитим локальные/секретные значения; шаблон — `.env.example`
+.env
+.env.*
+!.env.example

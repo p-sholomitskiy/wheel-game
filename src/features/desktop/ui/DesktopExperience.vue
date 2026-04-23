@@ -1,5 +1,6 @@
 <template>
   <main class="desktop-screen">
+    <BuildVersionBadge />
     <LanguageSwitcher />
 
     <div class="desktop-content-column">
@@ -33,6 +34,7 @@
 <script setup lang="ts">
 import HeroActionButton from "@/features/shared/ui/HeroActionButton.vue";
 import BrandRow from "@/features/shared/ui/BrandRow.vue";
+import BuildVersionBadge from "@/features/shared/ui/BuildVersionBadge.vue";
 import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue";
 import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue";
 import WheelSection from "@/features/shared/ui/WheelSection.vue";

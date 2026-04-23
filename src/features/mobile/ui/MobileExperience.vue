@@ -1,5 +1,6 @@
 <template>
   <main class="mobile-screen">
+    <BuildVersionBadge />
     <div class="mobile-content-column">
       <section class="mobile-hero">
         <div class="mobile-brand-bar">
@@ -33,6 +34,7 @@
 
 <script setup lang="ts">
 import BrandRow from "@/features/shared/ui/BrandRow.vue";
+import BuildVersionBadge from "@/features/shared/ui/BuildVersionBadge.vue";
 import HeroActionButton from "@/features/shared/ui/HeroActionButton.vue";
 import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue";
 import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue";

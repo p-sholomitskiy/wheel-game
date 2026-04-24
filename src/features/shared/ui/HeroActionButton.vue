@@ -1,15 +1,17 @@
 <template>
   <button
+    ref="rootRef"
     class="hero-action-button"
     :class="{ 'hero-action-button--mobile': props.layout === 'mobile' }"
     type="button"
+    :style="fitFontSizePx != null ? { fontSize: `${fitFontSizePx}px` } : undefined"
   >
     {{ buttonLabel }}
   </button>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useDesktopTexts } from "../composables/useDesktopTexts";
 import { useWheelSpinStorage } from "../composables/useWheelSpinStorage";
 
@@ -29,12 +31,113 @@ const buttonLabel = computed(() => {
   const remainingAttempts = Math.max(0, maxSpins - completedSpins.value);
   return `${baseText} - ${remainingAttempts}`;
 });
+
+const rootRef = ref<HTMLElement | null>(null);
+const fitFontSizePx = ref<number | null>(null);
+
+const MIN_FONT_PX = 10;
+const MAX_FONT_PX = 512;
+const FIT_SLACK_PX = 1;
+
+function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): number {
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  if (w < 1 || h < 1) {
+    return MIN_FONT_PX;
+  }
+
+  const trySize = (px: number): boolean => {
+    container.style.fontSize = `${px}px`;
+    void textEl.offsetWidth;
+    return textEl.scrollWidth <= w + FIT_SLACK_PX && textEl.scrollHeight <= h + FIT_SLACK_PX;
+  };
+
+  const previousInline = container.style.fontSize;
+
+  if (trySize(MAX_FONT_PX)) {
+    container.style.fontSize = previousInline;
+    return MAX_FONT_PX;
+  }
+
+  if (!trySize(MIN_FONT_PX)) {
+    container.style.fontSize = previousInline;
+    return MIN_FONT_PX;
+  }
+
+  let lo = MIN_FONT_PX;
+  let hi = MAX_FONT_PX;
+  while (hi - lo > 0.35) {
+    const mid = (lo + hi) / 2;
+    if (trySize(mid)) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+
+  container.style.fontSize = previousInline;
+  return Math.round(lo * 100) / 100;
+}
+
+let ro: ResizeObserver | null = null;
+let raf = 0;
+
+async function scheduleFit() {
+  cancelAnimationFrame(raf);
+  if (typeof document !== "undefined" && document.fonts?.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      /* ignore */
+    }
+  }
+  await nextTick();
+  await new Promise<void>((resolve) => {
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      resolve();
+    });
+  });
+
+  const root = rootRef.value;
+  if (!root) {
+    return;
+  }
+  fitFontSizePx.value = largestFontSizeThatFits(root, root);
+}
+
+onMounted(() => {
+  const root = rootRef.value;
+  if (!root || typeof ResizeObserver === "undefined") {
+    void scheduleFit();
+    return;
+  }
+  ro = new ResizeObserver(() => {
+    void scheduleFit();
+  });
+  ro.observe(root);
+  void scheduleFit();
+});
+
+onBeforeUnmount(() => {
+  cancelAnimationFrame(raf);
+  ro?.disconnect();
+  ro = null;
+});
+
+watch(
+  () => [buttonLabel.value, props.layout] as const,
+  () => {
+    void scheduleFit();
+  },
+);
 </script>
 
 <style scoped>
 .hero-action-button {
   box-sizing: border-box;
   width: 70%;
+  min-width: 0;
   min-height: 35px;
   height: auto;
   opacity: 1;
@@ -53,6 +156,8 @@ const buttonLabel = computed(() => {
   font-weight: 500;
   font-style: italic;
   font-size: 22px;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 
 .hero-action-button--mobile {

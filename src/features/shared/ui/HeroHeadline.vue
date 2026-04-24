@@ -1,12 +1,17 @@
 <template>
-  <div class="hero-headline" :class="{ 'hero-headline--mobile': layout === 'mobile' }">
+  <div
+    ref="rootRef"
+    class="hero-headline"
+    :class="{ 'hero-headline--mobile': layout === 'mobile' }"
+    :style="fitFontSizePx != null ? { fontSize: `${fitFontSizePx}px` } : undefined"
+  >
     <span class="hero-headline__outline" aria-hidden="true">{{ displayText }}</span>
-    <span class="hero-headline__fill">{{ displayText }}</span>
+    <span ref="fillRef" class="hero-headline__fill">{{ displayText }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useDesktopTexts } from "../composables/useDesktopTexts";
 
 const { texts } = useDesktopTexts();
@@ -20,6 +25,109 @@ const props = withDefaults(
 );
 
 const displayText = computed(() => props.text ?? texts.value.heroHeadline);
+
+const rootRef = ref<HTMLElement | null>(null);
+const fillRef = ref<HTMLElement | null>(null);
+const fitFontSizePx = ref<number | null>(null);
+
+const MIN_FONT_PX = 10;
+const MAX_FONT_PX = 512;
+/** Subpixel / stroke slack so binary search does not sit on a rounding cliff. */
+const FIT_SLACK_PX = 1;
+
+function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): number {
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  if (w < 1 || h < 1) {
+    return MIN_FONT_PX;
+  }
+
+  const trySize = (px: number): boolean => {
+    container.style.fontSize = `${px}px`;
+    void textEl.offsetWidth;
+    return (
+      textEl.scrollWidth <= w + FIT_SLACK_PX && textEl.scrollHeight <= h + FIT_SLACK_PX
+    );
+  };
+
+  const previousInline = container.style.fontSize;
+
+  if (trySize(MAX_FONT_PX)) {
+    container.style.fontSize = previousInline;
+    return MAX_FONT_PX;
+  }
+
+  if (!trySize(MIN_FONT_PX)) {
+    container.style.fontSize = previousInline;
+    return MIN_FONT_PX;
+  }
+
+  let lo = MIN_FONT_PX;
+  let hi = MAX_FONT_PX;
+  while (hi - lo > 0.35) {
+    const mid = (lo + hi) / 2;
+    if (trySize(mid)) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+
+  container.style.fontSize = previousInline;
+  return Math.round(lo * 100) / 100;
+}
+
+let ro: ResizeObserver | null = null;
+let raf = 0;
+
+async function scheduleFit() {
+  cancelAnimationFrame(raf);
+  if (typeof document !== "undefined" && document.fonts?.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      /* ignore */
+    }
+  }
+  await nextTick();
+  await new Promise<void>((resolve) => {
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      resolve();
+    });
+  });
+
+  const root = rootRef.value;
+  const fill = fillRef.value;
+  if (!root || !fill) {
+    return;
+  }
+  fitFontSizePx.value = largestFontSizeThatFits(root, fill);
+}
+
+onMounted(() => {
+  const root = rootRef.value;
+  if (!root || typeof ResizeObserver === "undefined") {
+    scheduleFit();
+    return;
+  }
+  ro = new ResizeObserver(() => scheduleFit());
+  ro.observe(root);
+  scheduleFit();
+});
+
+onBeforeUnmount(() => {
+  cancelAnimationFrame(raf);
+  ro?.disconnect();
+  ro = null;
+});
+
+watch(
+  () => [displayText.value, props.layout] as const,
+  () => {
+    void scheduleFit();
+  },
+);
 </script>
 
 <style scoped>
@@ -28,6 +136,8 @@ const displayText = computed(() => props.text ?? texts.value.heroHeadline);
   display: grid;
   place-items: center;
   width: 100%;
+  min-width: 0;
+  min-height: 0;
   box-sizing: border-box;
   font-family: Montserrat, system-ui, sans-serif;
   font-size: clamp(24px, 5.59vmin, 36px);

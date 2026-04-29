@@ -16,7 +16,7 @@
             <template v-else
               ><span
                 class="wheel-label__text"
-                :class="{ 'wheel-label__text--highlight': isHighlightedLabel(label) }"
+                :class="{ 'wheel-label__text--highlight': isHighlightedSector(index) }"
                 >{{ label }}</span
               ></template
             >
@@ -109,15 +109,14 @@ function getWheelLabelStyle(index: number) {
   const angle = index * sectorAngleDeg.value;
   return { "--wheel-label-angle": `${angle}deg` };
 }
-const activeWheelHighlightLabels = computed(() => {
+const activeHighlightedSectorIndices = computed<number[]>(() => {
   const n = completedSpins.value;
   if (n <= 0) return [];
-  const list = texts.value.wheel.highlightedLabels;
-  if (n === 1) return list[0] != null ? [list[0]] : [];
-  return [list[0], list[1]].filter((entry): entry is string => entry != null && entry !== "");
+  if (n === 1) return [firstPrizeSectorIndex.value];
+  return [firstPrizeSectorIndex.value, secondPrizeSectorIndex.value];
 });
-function isHighlightedLabel(label: string) {
-  return activeWheelHighlightLabels.value.some((token) => wheelSectorLabelMatches(token, label));
+function isHighlightedSector(index: number) {
+  return activeHighlightedSectorIndices.value.includes(index);
 }
 
 function normalizeWheelLabel(label: string) {
@@ -200,7 +199,6 @@ function findSectorIndexForPrizeLabel(labels: string[], prizeLabel: string | und
 }
 .wheel-label__text--highlight {
   color: #ffdc3a;
-  font-size: calc(14.86 / var(--wheel-art) * 100cqi);
 }
 .wheel-label__logo {
   display: block;

@@ -35,7 +35,11 @@ const MAX_FONT_PX = 512;
 /** Subpixel / stroke slack so binary search does not sit on a rounding cliff. */
 const FIT_SLACK_PX = 1;
 
-function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): number {
+function largestFontSizeThatFits(
+  container: HTMLElement,
+  textEl: HTMLElement,
+  maxFontPx: number,
+): number {
   const w = container.clientWidth;
   const h = container.clientHeight;
   if (w < 1 || h < 1) {
@@ -52,9 +56,9 @@ function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): n
 
   const previousInline = container.style.fontSize;
 
-  if (trySize(MAX_FONT_PX)) {
+  if (trySize(maxFontPx)) {
     container.style.fontSize = previousInline;
-    return MAX_FONT_PX;
+    return maxFontPx;
   }
 
   if (!trySize(MIN_FONT_PX)) {
@@ -63,7 +67,7 @@ function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): n
   }
 
   let lo = MIN_FONT_PX;
-  let hi = MAX_FONT_PX;
+  let hi = maxFontPx;
   while (hi - lo > 0.35) {
     const mid = (lo + hi) / 2;
     if (trySize(mid)) {
@@ -102,7 +106,8 @@ async function scheduleFit() {
   if (!root || !fill) {
     return;
   }
-  fitFontSizePx.value = largestFontSizeThatFits(root, fill);
+  const maxFontPx = props.layout === "mobile" ? 28 : MAX_FONT_PX;
+  fitFontSizePx.value = largestFontSizeThatFits(root, fill, maxFontPx);
 }
 
 onMounted(() => {

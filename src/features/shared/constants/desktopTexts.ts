@@ -41,7 +41,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
     wheel: {
       labels: [
         "1000€",
-        "150FS",
+        "150FS + 120%",
         `${CASINO_NAME}`,
         "Qayta urinib ko'ring",
         "150€",
@@ -51,7 +51,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
         "Qayta urinib ko'ring",
         "50FS",
       ],
-      highlightedLabels: ["150€", "50FS"],
+      highlightedLabels: ["Qayta urinib ko'ring", "150FS + 120%"],
     },
   },
   tr: {
@@ -73,7 +73,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
     wheel: {
       labels: [
         "1000€",
-        "150FS",
+        "150FS + 120%",
         `${CASINO_NAME}`,
         "Tekrar deneyin",
         "150€",
@@ -83,7 +83,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
         "Tekrar deneyin",
         "50FS",
       ],
-      highlightedLabels: ["150€", "50FS"],
+      highlightedLabels: ["Tekrar deneyin", "150FS + 120%"],
     },
   },
   en: {
@@ -105,7 +105,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
     wheel: {
       labels: [
         "1000€",
-        "150FS",
+        "150FS + 120%",
         `${CASINO_NAME}`,
         "TRY AGAIN",
         "150€",
@@ -115,7 +115,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
         "TRY AGAIN",
         "50FS",
       ],
-      highlightedLabels: ["150€", "50FS"],
+      highlightedLabels: ["TRY AGAIN", "150FS + 120%"],
     },
   },
 };

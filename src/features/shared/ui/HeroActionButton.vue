@@ -76,7 +76,7 @@ function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): n
   }
 
   container.style.fontSize = previousInline;
-  return Math.round(lo * 100) / 100;
+  return Math.max(MIN_FONT_PX, Math.floor(lo));
 }
 
 let ro: ResizeObserver | null = null;
@@ -163,19 +163,21 @@ watch(
 .hero-action-button--mobile {
   width: 90%;
   min-height: 35px;
-  height: 35px;
+  height: auto;
   margin: 0 auto;
   padding: 0 20px;
   font-family: Montserrat, system-ui, sans-serif;
   font-weight: 500;
   font-style: italic;
-  font-size: 22px;
+  font-size: clamp(12px, 4.2vw, 22px);
   leading-trim: CAP_HEIGHT;
   line-height: 100%;
   letter-spacing: 0;
   text-align: center;
   text-box-trim: unset;
   text-box-edge: unset;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 900px) {

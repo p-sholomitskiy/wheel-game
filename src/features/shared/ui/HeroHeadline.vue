@@ -74,7 +74,7 @@ function largestFontSizeThatFits(container: HTMLElement, textEl: HTMLElement): n
   }
 
   container.style.fontSize = previousInline;
-  return Math.round(lo * 100) / 100;
+  return Math.max(MIN_FONT_PX, Math.floor(lo));
 }
 
 let ro: ResizeObserver | null = null;

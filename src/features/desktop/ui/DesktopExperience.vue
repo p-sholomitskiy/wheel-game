@@ -4,30 +4,17 @@
     <LanguageSwitcher />
 
     <div class="desktop-content-column">
-      <div id="bonus-reward-anchor" class="desktop-bonus-anchor"></div>
-
       <div class="desktop-hero-top">
         <BrandRow />
         <HeroHeadline />
         <HeroActionButton />
+        <div id="bonus-reward-anchor" class="desktop-bonus-anchor"></div>
       </div>
 
       <WheelSection />
     </div>
 
-    <picture>
-      <source media="(max-width: 1799px)" srcset="/ui/mascot-mobile.svg" />
-      <img
-        class="desktop-mascot"
-        src="/ui/mascot-desktop.svg"
-        alt=""
-        width="720"
-        height="589"
-        decoding="async"
-        draggable="false"
-        aria-hidden="true"
-      />
-    </picture>
+    <MascotImage />
   </main>
 </template>
 
@@ -37,6 +24,7 @@ import BrandRow from "@/features/shared/ui/BrandRow.vue";
 import BuildVersionBadge from "@/features/shared/ui/BuildVersionBadge.vue";
 import HeroHeadline from "@/features/shared/ui/HeroHeadline.vue";
 import LanguageSwitcher from "@/features/shared/ui/LanguageSwitcher.vue";
+import MascotImage from "@/features/shared/ui/MascotImage.vue";
 import WheelSection from "@/features/shared/ui/WheelSection.vue";
 </script>
 
@@ -76,6 +64,7 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
 
 .desktop-hero-top {
   order: 1;
+  position: relative;
   display: grid;
   grid-template-rows: minmax(48px, auto) minmax(0, 1fr) minmax(35px, auto);
   align-items: stretch;
@@ -118,14 +107,16 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
 }
 
 .desktop-bonus-anchor {
-  order: 3;
-  position: relative;
-  z-index: 4;
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 25px);
+  transform: translateX(-50%);
+  z-index: 1000;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0;
+  pointer-events: none;
 }
 
 /*
@@ -135,37 +126,8 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
  * min-height бара в BonusRewardBar.vue = 100px.
  */
 .desktop-bonus-anchor :deep(.bonus-message) {
-  --bonus-overlap-half: clamp(50px, 50 * min(100cqw / 410, 1px), 200px);
-  margin-top: calc(-1 * (var(--desktop-content-gap, 20px) + var(--bonus-overlap-half)));
+  margin-top: 0;
+  pointer-events: auto;
 }
 
-/* Декор: по умолчанию правый нижний угол; при ширине < 1800px — левый нижний + mascot-mobile.svg через <picture>. */
-.desktop-mascot {
-  height: 60vh;
-  position: fixed;
-  right: env(safe-area-inset-right, 0);
-  left: auto;
-  bottom: env(safe-area-inset-bottom, 0);
-  z-index: 50;
-  box-sizing: border-box;
-  width: auto;
-  max-width: calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
-  aspect-ratio: 720 / 589;
-  object-fit: contain;
-  object-position: right bottom;
-  display: block;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-@media (max-width: 1799px) {
-  .desktop-mascot {
-    height: 50vh;
-    right: auto;
-    left: env(safe-area-inset-left, 0);
-    aspect-ratio: 256 / 275;
-    object-position: left bottom;
-  }
-}
 </style>

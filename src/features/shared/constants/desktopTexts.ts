@@ -34,8 +34,8 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
     heroActionButton: "Qolgan urinishlar soni",
     spinButton: "Aylantirish",
     bonusReward: {
-      amountText: "150 FS",
-      subtitleText: "Sizning bonusingiz",
+      amountText: "120% + 150 FS",
+      subtitleText: "Siz yutdingiz",
       buttonText: "Olish",
     },
     wheel: {
@@ -66,8 +66,8 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
     heroActionButton: "Kalan deneme sayısı",
     spinButton: "Çevir",
     bonusReward: {
-      amountText: "150 FS",
-      subtitleText: "Bonusunuz",
+      amountText: "120% + 150 FS",
+      subtitleText: "Kazandınız",
       buttonText: "Al",
     },
     wheel: {
@@ -98,7 +98,7 @@ export const DESKTOP_TEXTS_BY_LOCALE: Record<LocaleCode, DesktopTexts> = {
     heroActionButton: "Remaining attempts",
     spinButton: "Spin",
     bonusReward: {
-      amountText: "150 FS",
+      amountText: "120% + 150 FS",
       subtitleText: "Your bonus",
       buttonText: "Claim",
     },

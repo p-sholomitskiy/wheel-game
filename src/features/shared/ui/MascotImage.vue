@@ -23,17 +23,21 @@ withDefaults(
 
 <style scoped>
 .mascot-image {
-  margin-top: 12px;
-  height: clamp(220px, 40vh, 520px);
-  width: auto;
-  max-width: min(100%, 420px);
+  position: fixed;
+  right: calc(20vw - 269.5px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 539px;
+  height: 929px;
+  max-width: none;
   aspect-ratio: 539 / 929;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: right bottom;
   display: block;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
+  z-index: 0;
 }
 
 .mascot-image--mobile {

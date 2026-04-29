@@ -224,14 +224,16 @@ function findSectorIndexForPrizeLabel(labels: string[], prizeLabel: string | und
   box-sizing: border-box;
   position: relative;
   z-index: 4;
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   margin-top: calc(-1 * (20px + var(--bonus-overlap-half)));
   pointer-events: auto;
 }
 .bonus-message__inner {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   overflow: visible;

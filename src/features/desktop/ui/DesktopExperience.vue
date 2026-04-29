@@ -130,4 +130,58 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   pointer-events: auto;
 }
 
+.desktop-bonus-anchor :deep(.bonus-reward-bar) {
+  width: 410px;
+  min-width: 410px;
+  max-width: 410px;
+  height: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  flex: 0 0 410px;
+  padding: 20px 24px 20px 84px;
+  gap: 16px;
+  border-radius: 16px;
+}
+
+.desktop-bonus-anchor :deep(.bonus-reward-bar__gift) {
+  scale: 1.1;
+  left: -40px;
+  width: 110px;
+  height: 110px;
+}
+
+.desktop-bonus-anchor :deep(.bonus-reward-bar__body) {
+  gap: 16px;
+}
+
+.desktop-bonus-anchor :deep(.bonus-reward-bar__text-group) {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 4px;
+}
+
+.desktop-bonus-anchor :deep(.bonus-reward-bar__text-line) {
+  width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  font-size: 20px;
+  text-align: center;
+}
+
+.desktop-bonus-anchor :deep(.bonus-reward-bar__body .bonus-reward-cta) {
+  width: 118px;
+  min-height: 38px;
+  height: 38px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
 </style>

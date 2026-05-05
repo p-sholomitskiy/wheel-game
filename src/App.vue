@@ -4,11 +4,11 @@
 </template>
 
 <script setup lang="ts">
-import DesktopExperience from "./features/desktop/ui/DesktopExperience.vue"
-import MobileExperience from "./features/mobile/ui/MobileExperience.vue"
-import { useIsMobileLayout } from "./composables/useIsMobileLayout"
+import DesktopExperience from "./features/desktop/ui/DesktopExperience.vue";
+import MobileExperience from "./features/mobile/ui/MobileExperience.vue";
+import { useIsMobileLayout } from "./composables/useIsMobileLayout";
 
-const { isMobile } = useIsMobileLayout()
+const { isMobile } = useIsMobileLayout();
 </script>
 
 <style>

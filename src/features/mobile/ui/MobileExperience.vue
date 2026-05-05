@@ -187,7 +187,6 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   }
 }
 
-/* Узкий вьюпорт: меньший шрифт и обрезка, иначе clamp(7cqi) перебивает scoped-стили и заголовок наезжает на CTA. */
 @media (max-width: 399px) {
   .mobile-hero :deep(.hero-headline--mobile) {
     font-size: 22px;
@@ -217,5 +216,4 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   height: 122px;
   aspect-ratio: unset;
 }
-
 </style>

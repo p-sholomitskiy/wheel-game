@@ -119,12 +119,6 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   pointer-events: none;
 }
 
-/*
- * Бонус-бар телепортируется сюда из WheelSection.
- * Нужно, чтобы нижний край колеса совпадал с серединой BonusRewardBar:
- * поднимаем блок на половину высоты бара + колоночный gap (20px у .desktop-content-column).
- * min-height бара в BonusRewardBar.vue = 100px.
- */
 .desktop-bonus-anchor :deep(.bonus-message) {
   margin-top: 0;
   pointer-events: auto;
@@ -183,5 +177,4 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   border-radius: 8px;
   font-size: 0.875rem;
 }
-
 </style>

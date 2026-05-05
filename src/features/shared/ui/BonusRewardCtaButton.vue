@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 function redirectToRegistrationPage() {
-  window.open("https://google.com", "_blank");
+  window.open("https://google.com", "_blank"); // TODO: replace with actual registration page
 }
 </script>
 

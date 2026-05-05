@@ -76,8 +76,8 @@ const bolts: Bolt[] = [
   animation-name: lightning-bolt-flash;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.55))
-    drop-shadow(0 0 64px rgba(255, 255, 255, 0.25));
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 40px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 64px rgba(255, 255, 255, 0.25));
 }
 
 /* Длинный цикл: нарастание → яркая фаза → плавное «затухание» (молния ещё чуть видна). */

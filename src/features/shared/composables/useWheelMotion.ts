@@ -8,7 +8,6 @@ export type UseWheelMotionOptions = {
   onSpinAnimationComplete?: () => void;
 };
 
-/** Normalized clockwise wheel rotation (deg) so sector `index` sits under the top pointer. */
 export function sectorIndexToNormalizedWheelAngle(index: number, sectorCount: number): number {
   if (sectorCount <= 0) return 360;
   const sectorAngle = 360 / sectorCount;

@@ -28,7 +28,7 @@ export function useWheelSpinStorage() {
         localStorage.setItem(STORAGE_KEY, String(completedSpins.value));
       }
     } catch {
-      // ignore private mode / quota
+      // ignore
     }
   }
 
@@ -39,7 +39,7 @@ export function useWheelSpinStorage() {
         localStorage.removeItem(STORAGE_KEY);
       }
     } catch {
-      // ignore private mode / quota
+      // ignore
     }
   }
 

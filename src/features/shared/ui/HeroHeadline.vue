@@ -49,9 +49,7 @@ function largestFontSizeThatFits(
   const trySize = (px: number): boolean => {
     container.style.fontSize = `${px}px`;
     void textEl.offsetWidth;
-    return (
-      textEl.scrollWidth <= w + FIT_SLACK_PX && textEl.scrollHeight <= h + FIT_SLACK_PX
-    );
+    return textEl.scrollWidth <= w + FIT_SLACK_PX && textEl.scrollHeight <= h + FIT_SLACK_PX;
   };
 
   const previousInline = container.style.fontSize;

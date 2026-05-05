@@ -1,20 +1,12 @@
 <template>
-  <button class="bonus-reward-cta" type="button" @click="isPopupOpen = true">
+  <button class="bonus-reward-cta" type="button" @click="redirectToRegistrationPage">
     <slot />
   </button>
-
-  <BonusRewardIntegrationPopup v-model="isPopupOpen" @submit="onIntegrationSubmit" />
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import BonusRewardIntegrationPopup from "./BonusRewardIntegrationPopup.vue";
-
-const isPopupOpen = ref(false);
-
-function onIntegrationSubmit(payload: { email: string; password: string }) {
-  void payload;
-  // Replace with bridge to the other project (postMessage, SDK, router, etc.).
+function redirectToRegistrationPage() {
+  window.open("https://google.com", "_blank"); // TODO: replace with actual registration page
 }
 </script>
 
@@ -25,14 +17,14 @@ function onIntegrationSubmit(payload: { email: string; password: string }) {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  width: 130px;
+  width: 118px;
   max-width: 100%;
-  min-height: 36px;
-  height: auto;
+  min-height: 38px;
+  height: 38px;
   opacity: 1;
   border: 0;
   border-radius: 8px;
-  padding: 14px 40px;
+  padding: 10px 20px;
   background: #ff0000;
   color: #fff;
   cursor: pointer;

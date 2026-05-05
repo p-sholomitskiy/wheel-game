@@ -6,7 +6,7 @@ export function useDesktopTexts() {
   const localeStore = useLocaleStore();
 
   const texts = computed(() => {
-    return DESKTOP_TEXTS_BY_LOCALE[localeStore.current] ?? DESKTOP_TEXTS_BY_LOCALE.kg;
+    return DESKTOP_TEXTS_BY_LOCALE[localeStore.current] ?? DESKTOP_TEXTS_BY_LOCALE.en;
   });
 
   return {

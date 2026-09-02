@@ -47,7 +47,7 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   padding: 0 0 clamp(16px, 4vh, 32px);
   box-sizing: border-box;
   background-color: #0c0e18;
-  background-image: url("/ui/bg-desktop.svg");
+  background-image: url("/ui/webp/bg-mobile.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

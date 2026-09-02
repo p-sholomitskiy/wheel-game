@@ -1,6 +1,6 @@
 <template>
   <div class="bonus-reward-bar" role="status" aria-live="polite">
-    <img class="bonus-reward-bar__gift" src="/ui/gift.svg" width="110" height="110" alt="" />
+    <img class="bonus-reward-bar__gift" src="/ui/webp/gift.webp" width="110" height="110" alt="" />
     <div class="bonus-reward-bar__body">
       <div class="bonus-reward-bar__text-group">
         <div class="bonus-reward-bar__text-line">

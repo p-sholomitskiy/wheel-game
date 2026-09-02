@@ -2,7 +2,7 @@
   <div class="wheel-section">
     <div class="wheel-visual">
       <div class="wheel-layer" :style="wheelStyle">
-        <img class="wheel" src="/ui/wheel.svg" alt="Wheel" />
+        <img class="wheel" src="/ui/webp/wheel.webp" alt="Wheel" />
         <div class="wheel-labels" aria-hidden="true">
           <div
             v-for="(label, index) in wheelLabels"
@@ -11,7 +11,7 @@
             :style="getWheelLabelStyle(index)"
           >
             <template v-if="label === `${CASINO_NAME}`"
-              ><img class="wheel-label__logo" src="/ui/logo-casino.svg" alt="Casino Logo"
+              ><img class="wheel-label__logo" src="/ui/webp/logo-casino.webp" alt="Casino Logo"
             /></template>
             <template v-else
               ><span
@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <img class="rim" src="/ui/wheel-rim.svg" alt="" />
+      <img class="rim" src="/ui/webp/wheel-rim.webp" alt="" />
       <WheelSpinButton
         :label="texts.spinButton"
         :disabled="!canSpin || isSpinning"

@@ -8,7 +8,7 @@
       <div class="brand-row__cell">
         <img
           class="brand-row__logo brand-row__logo--slot"
-          src="/ui/logo-slot.svg"
+          src="/ui/webp/logo-slot.webp"
           width="95"
           height="50"
           alt="Slot Logo"
@@ -17,7 +17,7 @@
       <div class="brand-row__cell">
         <img
           class="brand-row__logo brand-row__logo--casino"
-          src="/ui/logo-casino.svg"
+          src="/ui/webp/logo-casino.webp"
           width="100"
           height="15"
           alt="Casino Logo"
@@ -30,10 +30,10 @@
     <template v-else>
       <img
         class="brand-row__logo brand-row__logo--casino"
-        src="/ui/logo-casino.svg"
+        src="/ui/webp/logo-casino.webp"
         alt="Casino Logo"
       />
-      <img class="brand-row__logo brand-row__logo--slot" src="/ui/logo-slot.svg" alt="Slot Logo" />
+      <img class="brand-row__logo brand-row__logo--slot" src="/ui/webp/logo-slot.webp" alt="Slot Logo" />
     </template>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <img
     class="mascot-image"
     :class="{ 'mascot-image--mobile': layout === 'mobile' }"
-    src="/ui/mascot.gif"
+    src="/ui/webp/mascot.webp"
     alt=""
     width="539"
     height="929"

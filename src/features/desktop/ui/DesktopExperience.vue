@@ -42,7 +42,7 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
   padding: clamp(20px, 4vh, 56px) 0 40px;
   box-sizing: border-box;
   background-color: #0c0e18;
-  background-image: url("/ui/bg-desktop.svg");
+  background-image: url("/ui/webp/bg-desktop.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -99,7 +99,7 @@ import WheelSection from "@/features/shared/ui/WheelSection.vue";
 }
 
 .desktop-content-column > :deep(.wheel-section .wheel-spin-button) {
-  --wheel-spin-button-width: calc(62% * 1.15 * 1.1);
+  --wheel-spin-button-width: 27%;
 }
 
 .desktop-content-column > :deep(.wheel-section) {

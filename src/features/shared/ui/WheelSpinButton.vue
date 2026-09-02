@@ -14,6 +14,7 @@
 <script setup lang="ts">
 const props = defineProps<{ label: string; disabled?: boolean }>();
 const emit = defineEmits<{ click: [] }>();
+
 function onClick() {
   if (props.disabled) return;
   emit("click");
@@ -45,7 +46,7 @@ function onKeydown(e: KeyboardEvent) {
   top: 50%;
   transform: translate(-50%, -50%);
   width: var(--wheel-spin-button-width);
-  aspect-ratio: 320 / 110;
+  aspect-ratio: 1;
   z-index: 4;
   border: 0;
   padding: 0;
@@ -54,9 +55,27 @@ function onKeydown(e: KeyboardEvent) {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  background: url("/ui/wheel_button_desktop/button-default.svg") center / 100% 100% no-repeat;
+  background: url("/ui/webp/button-default.webp") center / 100% 100% no-repeat;
   pointer-events: auto;
   line-height: 0;
+}
+.wheel-spin-button::before,
+.wheel-spin-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+}
+.wheel-spin-button::before {
+  background-image: url("/ui/webp/button-hover.webp");
+}
+.wheel-spin-button::after {
+  background-image: url("/ui/webp/button-press.webp");
 }
 .wheel-spin-button__label {
   position: absolute;
@@ -95,14 +114,22 @@ function onKeydown(e: KeyboardEvent) {
   .wheel-spin-button:hover:not([aria-disabled="true"]) {
     animation: none;
     will-change: auto;
-    background-image: url("/ui/wheel_button_desktop/button-hover.svg");
+  }
+
+  .wheel-spin-button:hover:not([aria-disabled="true"])::before {
+    opacity: 1;
   }
 }
 
 .wheel-spin-button:active:not([aria-disabled="true"]) {
   animation: none;
   will-change: auto;
-  background-image: url("/ui/wheel_button_desktop/button-press.svg");
+}
+.wheel-spin-button:active:not([aria-disabled="true"])::before {
+  opacity: 0;
+}
+.wheel-spin-button:active:not([aria-disabled="true"])::after {
+  opacity: 1;
 }
 .wheel-spin-button:focus {
   outline: none;
@@ -116,7 +143,6 @@ function onKeydown(e: KeyboardEvent) {
   will-change: auto;
   cursor: not-allowed;
   pointer-events: none;
-  background-image: url("/ui/wheel_button_desktop/button-default.svg");
 }
 
 @media (prefers-reduced-motion: reduce) {

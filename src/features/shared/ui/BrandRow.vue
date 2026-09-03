@@ -8,7 +8,7 @@
       <div class="brand-row__cell">
         <img
           class="brand-row__logo brand-row__logo--slot"
-          src="/ui/webp/logo-slot.webp"
+          :src="`${assetBaseUrl}logo-slot.webp`"
           width="95"
           height="50"
           alt="Slot Logo"
@@ -17,7 +17,7 @@
       <div class="brand-row__cell">
         <img
           class="brand-row__logo brand-row__logo--casino"
-          src="/ui/webp/logo-casino.webp"
+          :src="`${assetBaseUrl}logo-casino.webp`"
           width="100"
           height="15"
           alt="Casino Logo"
@@ -30,15 +30,17 @@
     <template v-else>
       <img
         class="brand-row__logo brand-row__logo--casino"
-        src="/ui/webp/logo-casino.webp"
+        :src="`${assetBaseUrl}logo-casino.webp`"
         alt="Casino Logo"
       />
-      <img class="brand-row__logo brand-row__logo--slot" src="/ui/webp/logo-slot.webp" alt="Slot Logo" />
+      <img class="brand-row__logo brand-row__logo--slot" :src="`${assetBaseUrl}logo-slot.webp`" alt="Slot Logo" />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
+const assetBaseUrl = `${import.meta.env.BASE_URL}ui/webp/`;
+
 withDefaults(
   defineProps<{
     layout?: "desktop" | "mobile";

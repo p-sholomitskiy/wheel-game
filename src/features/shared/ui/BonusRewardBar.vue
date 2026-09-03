@@ -1,6 +1,6 @@
 <template>
   <div class="bonus-reward-bar" role="status" aria-live="polite">
-    <img class="bonus-reward-bar__gift" src="/ui/webp/gift.webp" width="110" height="110" alt="" />
+    <img class="bonus-reward-bar__gift" :src="`${assetBaseUrl}gift.webp`" width="110" height="110" alt="" />
     <div class="bonus-reward-bar__body">
       <div class="bonus-reward-bar__text-group">
         <div class="bonus-reward-bar__text-line">
@@ -19,6 +19,7 @@
 import { computed } from "vue";
 import BonusRewardCtaButton from "./BonusRewardCtaButton.vue";
 import { useDesktopTexts } from "../composables/useDesktopTexts";
+const assetBaseUrl = `${import.meta.env.BASE_URL}ui/webp/`;
 const props = defineProps<{ amountText?: string; subtitleText?: string; buttonText?: string }>();
 const { texts } = useDesktopTexts();
 const amountDisplay = computed(() => props.amountText ?? texts.value.bonusReward.amountText);
